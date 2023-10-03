@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Apiti is a personal project to create a money management app, with features being added gradually over time.
 
 ## Getting Started
 
@@ -16,21 +16,24 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Background
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+I was searching for a money management app on websites and Android but didn't find one that satisfied my requirements. None of the apps I tried had the function to create a daily limit budget, store the remaining amount if the daily limit was not reached, and cumulate it to the next day to increase the daily limit. It was this absence of this feature that motivated me to create Apiti. I plan to add features gradually, allowing the development process to begin as soon as possible.
 
-## Learn More
+### Behind The Scene
 
-To learn more about Next.js, take a look at the following resources:
+What I do:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Brainstorming the ideas.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Gathering references and inspiration.
 
-## Deploy on Vercel
+- Designing.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Developing.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Design Iteration 1
+
+![apiti design iteration 1](/docs/design-iteration1.png)
+
+[Figma design file](https://www.figma.com/file/bX4GBkBuOaZ47QT7I3HpPK/%5BAPROJECT%5D-apiti?type=design&node-id=1%3A2&mode=design&t=hcegQkJmGedJL2tk-1)
