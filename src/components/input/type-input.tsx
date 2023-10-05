@@ -25,7 +25,7 @@ export default function TypeInput({
             className="block w-28 cursor-pointer rounded-xl py-2.5 text-center text-sm font-medium leading-5 text-primary ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 transition-colors focus:outline-none peer-checked:bg-primary peer-checked:text-white peer-hover:bg-white/75 peer-hover:peer-checked:bg-primary peer-focus:ring-2"
             htmlFor={option.value}
           >
-            {option.value}
+            {option.label}
           </label>
         </div>
       ))}
