@@ -28,8 +28,7 @@ export default function HorizontalScroll({
 
   const handleMouseWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (!e.shiftKey) {
-      e.preventDefault();
-      e.currentTarget.scrollLeft += e.deltaY * 0.225;
+      e.currentTarget.scrollLeft += e.deltaY * 0.25;
     }
   };
 

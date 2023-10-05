@@ -1,4 +1,5 @@
 import IconCategory from "../icon/icon-category";
+import { Field } from "formik";
 
 export type CategoryOption = {
   label: string;
@@ -18,7 +19,7 @@ export default function CategoryInput({
       {options.map((option) => (
         <div className="relative" key={option.value}>
           <div className="flex w-20 flex-shrink-0 flex-col items-center justify-center py-2">
-            <input
+            <Field
               type="radio"
               id={option.value}
               name={name}

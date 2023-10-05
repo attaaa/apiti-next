@@ -1,3 +1,5 @@
+import { Field } from "formik";
+
 export type TypeOption = {
   label: string;
   value: string;
@@ -14,7 +16,7 @@ export default function TypeInput({
     <div className="flex w-fit space-x-1 rounded-2xl bg-blue-100 p-1">
       {options.map((option) => (
         <div className="relative" key={option.value}>
-          <input
+          <Field
             type="radio"
             id={option.value}
             name={name}
