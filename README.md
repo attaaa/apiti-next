@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Background
 
-I was searching for a money management app on websites and Android but didn't find one that satisfied my requirements. None of the apps I tried had the function to create a daily limit budget, store the remaining amount if the daily limit was not reached, and cumulate it to the next day to increase the daily limit. It was this absence of this feature that motivated me to create Apiti. I plan to add features gradually, allowing the development process to begin as soon as possible.
+I was searching for a money management app on websites and Android but didn't find one that satisfied my requirements. None of the apps I tried had the function to create a daily limit budget, store the remaining amount if the daily limit was not reached, and cumulate it to the next day to increase the daily limit. It was this absence of this feature that motivated me to create Apiti. I plan to add features gradually, allowing the development process to begin as soon as possible.**For this project, I will ignore semantic tags because SEO is not required.**
 
 ### Behind The Scene
 
