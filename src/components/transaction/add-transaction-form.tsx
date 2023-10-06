@@ -90,12 +90,16 @@ export default function AddTransactionForm() {
         {({ isValid, dirty }) => (
           <Form>
             <div className="mb-4">
-              <div className="mb-2 text-sm font-semibold">Transaction Type</div>
+              <div className="text-dark1 mb-2 text-sm font-semibold">
+                Transaction Type
+              </div>
               <TypeInput name="transactionType" options={typeOptions} />
             </div>
 
             <div className="mb-4">
-              <div className="mb-2 text-sm font-semibold">Transaction Name</div>
+              <div className="text-dark1 mb-2 text-sm font-semibold">
+                Transaction Name
+              </div>
               <Field
                 type="text"
                 name="transactionName"
@@ -106,7 +110,9 @@ export default function AddTransactionForm() {
             </div>
 
             <div className="mb-4">
-              <div className="mb-2 text-sm font-semibold">Amount</div>
+              <div className="text-dark1 mb-2 text-sm font-semibold">
+                Amount
+              </div>
               <Field
                 type="number"
                 name="amount"
@@ -117,7 +123,9 @@ export default function AddTransactionForm() {
             </div>
 
             <div className="mb-4">
-              <div className="mb-2 text-sm font-semibold">Description</div>
+              <div className="text-dark1 mb-2 text-sm font-semibold">
+                Description
+              </div>
               <Field
                 type="text"
                 name="description"
@@ -128,7 +136,7 @@ export default function AddTransactionForm() {
             </div>
 
             <div className="mb-4">
-              <div className="text-sm font-semibold">Category</div>
+              <div className="text-dark1 text-sm font-semibold">Category</div>
               <HorizontalScroll className="relative -left-4 w-[calc(100%+2rem)] overflow-x-auto">
                 <div className="mx-1 flex">
                   <CategoryInput
@@ -141,7 +149,7 @@ export default function AddTransactionForm() {
 
             <button
               type="submit"
-              className="mt-2 w-full cursor-pointer rounded-2xl bg-primary px-3 py-3 text-center text-white shadow-md shadow-blue-500/40 transition-colors hover:bg-primary-dark disabled:bg-primary/40"
+              className="mt-2 w-full cursor-pointer rounded-2xl bg-primary px-3 py-3 text-center text-white transition-colors hover:bg-primary-dark disabled:bg-primary/40"
               disabled={!isValid || !dirty}
             >
               Add Transaction

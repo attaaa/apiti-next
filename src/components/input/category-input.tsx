@@ -34,7 +34,7 @@ export default function CategoryInput({
 
             <label
               htmlFor={option.label}
-              className="block w-full truncate px-1 text-center text-xs font-medium text-neutral-700 transition-colors peer-checked:text-primary"
+              className="text-dark2 block w-full truncate px-1 text-center text-xs font-medium transition-colors peer-checked:text-primary"
             >
               {option.label}
             </label>

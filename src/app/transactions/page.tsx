@@ -6,32 +6,17 @@ import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import CustomModal from "@/components/modal/custom-modal";
 import AddTransactionForm from "@/components/transaction/add-transaction-form";
+import EmptyTransaction from "../../assets/illustration/empty-transaction.svg";
 
-function TransactionItem() {
-  const dataTransactions = [
-    {
-      id: "001",
-      name: "Nasi Goreng",
-      date: new Date(),
-      amount: 13000,
-      description: "",
-    },
-    {
-      id: "002",
-      name: "Ayam Crispy",
-      date: new Date(),
-      amount: 24000,
-      description: "",
-    },
-    {
-      id: "003",
-      name: "Ayam Geprek",
-      date: new Date(),
-      amount: 15000,
-      description: "",
-    },
-  ];
+export type Transaction = {
+  id: string;
+  name: string;
+  date: Date;
+  amount: number;
+  description: string;
+};
 
+function TransactionItem({ transaction }: { transaction: Transaction }) {
   const formatDate = (date: Date) => {
     return date.toLocaleString(undefined, {
       day: "numeric",
@@ -40,11 +25,8 @@ function TransactionItem() {
     });
   };
 
-  const transactionList = dataTransactions.map((transaction) => (
-    <div
-      className="transaction-item mb-2 flex w-full items-center gap-3 rounded-[20px] bg-white p-4"
-      key={transaction.id}
-    >
+  return (
+    <div className="transaction-item mb-2 flex w-full items-center gap-3 rounded-[20px] bg-white p-4">
       <div className="transaction-item__icon rounded-[18px] bg-primary-light p-2.5 text-primary">
         <IconCategory name="gift" />
       </div>
@@ -58,35 +40,43 @@ function TransactionItem() {
         {transaction.amount}
       </div>
     </div>
-  ));
-
-  return transactionList;
+  );
 }
 
-const TransactionCategory = () => {
+function TransactionCategory({
+  transactions,
+}: {
+  transactions: Transaction[];
+}) {
   return (
     <div className="mb-5">
       <div className="mt-2 px-4">
         <div className="mb-3 flex w-full items-center justify-between">
-          <div className="text-lg font-semibold">Recent</div>
+          <div className="text-dark1 text-lg font-semibold">Recent</div>
           <div className="cursor-pointer text-sm text-primary transition-colors hover:text-primary-dark">
             See all
           </div>
         </div>
 
         <div>
-          <TransactionItem />
+          {transactions.map((transaction: Transaction) => (
+            <TransactionItem transaction={transaction} key={transaction.id} />
+          ))}
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default function TransactionsPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [currScrollPos, setCurrScrollPos] = useState(0);
   const containerScrollRef = useRef<HTMLDivElement | null>(null);
+
+  const [transactionsData, setTransactionsData] = useState<
+    Transaction[] | null
+  >(null);
 
   useEffect(() => {
     const containerScrollElm = containerScrollRef.current;
@@ -107,11 +97,26 @@ export default function TransactionsPage() {
 
   return (
     <div className="h-full w-full overflow-y-auto" ref={containerScrollRef}>
-      <div>
+      <div className="h-[calc(100%-76px)]">
         <Navbar />
-        <TransactionCategory />
-        <TransactionCategory />
-        <TransactionCategory />
+        {transactionsData ? (
+          <>
+            <TransactionCategory transactions={transactionsData} />
+          </>
+        ) : (
+          <div className="grid h-full w-full place-items-center">
+            <div className="pb-20 text-center">
+              <EmptyTransaction className="mx-auto mb-8 w-2/3" />
+              <p className="text-dark1 py-5 text-lg font-semibold">
+                Nothing to Show Yet
+              </p>
+              <p className="text-dark2 px-12 text-sm font-medium">
+                Enter your first transaction by tapping the add transaction
+                button below!
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* action add transaction */}
