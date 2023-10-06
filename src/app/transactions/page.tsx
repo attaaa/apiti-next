@@ -7,18 +7,21 @@ import clsx from "clsx";
 import CustomModal from "@/components/modal/custom-modal";
 import AddTransactionForm from "@/components/transaction/add-transaction-form";
 import EmptyTransaction from "../../assets/illustration/empty-transaction.svg";
+import { getLocalData } from "@/helper/localStorage";
 
 export type Transaction = {
   id: string;
+  type: string;
   name: string;
-  date: Date;
+  date: string;
   amount: number;
   description: string;
+  category: string;
 };
 
 function TransactionItem({ transaction }: { transaction: Transaction }) {
-  const formatDate = (date: Date) => {
-    return date.toLocaleString(undefined, {
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleString(undefined, {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -31,12 +34,12 @@ function TransactionItem({ transaction }: { transaction: Transaction }) {
         <IconCategory name="gift" />
       </div>
 
-      <div className="transaction-item__details">
+      <div className="transaction-item__details text-dark1">
         <div className="mb-0.5 text-sm font-semibold">{transaction.name}</div>
         <div className="text-xs">{formatDate(transaction.date)}</div>
       </div>
 
-      <div className="transaction-item__amount ml-auto font-semibold">
+      <div className="transaction-item__amount text-dark1 ml-auto font-semibold">
         {transaction.amount}
       </div>
     </div>
@@ -76,7 +79,12 @@ export default function TransactionsPage() {
 
   const [transactionsData, setTransactionsData] = useState<
     Transaction[] | null
-  >(null);
+  >(() => getLocalData("transactions"));
+
+  const refreshTransactionData = () => {
+    setIsOpen(false);
+    setTransactionsData(() => getLocalData("transactions"));
+  };
 
   useEffect(() => {
     const containerScrollElm = containerScrollRef.current;
@@ -137,7 +145,7 @@ export default function TransactionsPage() {
       </div>
 
       <CustomModal isOpen={isOpen} onOverlayClick={() => setIsOpen(false)}>
-        <AddTransactionForm />
+        <AddTransactionForm onAddTransaction={refreshTransactionData} />
       </CustomModal>
     </div>
   );

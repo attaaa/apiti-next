@@ -33,7 +33,7 @@ export default function CategoryInput({
             </div>
 
             <label
-              htmlFor={option.label}
+              htmlFor={option.value}
               className="text-dark2 block w-full truncate px-1 text-center text-xs font-medium transition-colors peer-checked:text-primary"
             >
               {option.label}

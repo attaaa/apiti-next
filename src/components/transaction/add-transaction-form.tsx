@@ -3,13 +3,15 @@ import CategoryInput, { CategoryOption } from "../input/category-input";
 import TypeInput, { TypeOption } from "../input/type-input";
 import HorizontalScroll from "../layout/horizontal-scroll";
 import * as Yup from "yup";
+import { pushData } from "@/helper/localStorage";
+import generateId from "@/helper/generator";
 
 type TransactionInput = {
-  transactionType: string;
-  transactionName: string;
+  type: string;
+  name: string;
   amount: string;
   description: string;
-  transactionCategory: string;
+  category: string;
 };
 
 const typeOptions: TypeOption[] = [
@@ -62,29 +64,41 @@ const categoryOptions: CategoryOption[] = [
 ];
 
 const formInitialValues = {
-  transactionType: typeOptions[0].value,
-  transactionName: "",
+  type: typeOptions[0].value,
+  name: "",
   amount: "",
   description: "",
-  transactionCategory: "",
+  category: "",
 };
 
 const transcationFormSchema = Yup.object().shape({
-  transactionType: Yup.string().required(""),
-  transactionName: Yup.string().required(""),
+  type: Yup.string().required(""),
+  name: Yup.string().required(""),
   amount: Yup.string().required(""),
   description: Yup.string().required(""),
-  transactionCategory: Yup.string(),
+  category: Yup.string(),
 });
 
-export default function AddTransactionForm() {
+export default function AddTransactionForm({
+  onAddTransaction,
+}: {
+  onAddTransaction: Function;
+}) {
+  const handleOnSubmit = (values: TransactionInput) => {
+    console.log(values);
+    pushData("transactions", {
+      ...values,
+      date: new Date(),
+      id: generateId("transaction"),
+    });
+    onAddTransaction();
+  };
+
   return (
     <>
       <Formik
         initialValues={formInitialValues}
-        onSubmit={(values: TransactionInput) => {
-          console.log(values);
-        }}
+        onSubmit={handleOnSubmit}
         validationSchema={transcationFormSchema}
       >
         {({ isValid, dirty }) => (
@@ -93,7 +107,7 @@ export default function AddTransactionForm() {
               <div className="text-dark1 mb-2 text-sm font-semibold">
                 Transaction Type
               </div>
-              <TypeInput name="transactionType" options={typeOptions} />
+              <TypeInput name="type" options={typeOptions} />
             </div>
 
             <div className="mb-4">
@@ -101,9 +115,10 @@ export default function AddTransactionForm() {
                 Transaction Name
               </div>
               <Field
+                autoComplete="string"
                 type="text"
-                name="transactionName"
-                id="transactionName"
+                name="name"
+                id="name"
                 placeholder="Breakfast"
                 className=" block w-full rounded-xl border-2 px-4 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary focus-visible:outline-none"
               />
@@ -139,10 +154,7 @@ export default function AddTransactionForm() {
               <div className="text-dark1 text-sm font-semibold">Category</div>
               <HorizontalScroll className="relative -left-4 w-[calc(100%+2rem)] overflow-x-auto">
                 <div className="mx-1 flex">
-                  <CategoryInput
-                    name="transactionCategory"
-                    options={categoryOptions}
-                  />
+                  <CategoryInput name="category" options={categoryOptions} />
                 </div>
               </HorizontalScroll>
             </div>
