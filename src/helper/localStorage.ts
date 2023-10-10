@@ -1,16 +1,22 @@
 export function getLocalData(key: string) {
+  if (typeof window === "undefined") return null;
+
   const data = localStorage.getItem(key);
 
-  if (!data) return;
+  if (!data) return null;
 
   return JSON.parse(data);
 }
 
 export function setLocalData(key: string, value: any) {
+  if (typeof window === "undefined") return null;
+
   localStorage.setItem(key, JSON.stringify(value));
 }
 
 export function pushData(key: string, value: any) {
+  if (typeof window === "undefined") return null;
+
   const currData = localStorage.getItem(key);
 
   if (!currData) {
@@ -27,6 +33,8 @@ export function pushData(key: string, value: any) {
 }
 
 export function removeData(key: string, id: string) {
+  if (typeof window === "undefined") return null;
+  
   const currData = localStorage.getItem(key);
 
   if (!currData) return;
