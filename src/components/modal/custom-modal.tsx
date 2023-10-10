@@ -23,7 +23,7 @@ export default function CustomModal({
           leaveTo="opacity-0"
         >
           <div
-            className="absolute left-0 top-0 z-10 h-full w-full bg-black bg-opacity-80"
+            className="absolute left-0 top-0 z-20 h-full w-full bg-black bg-opacity-80"
             onClick={() => onOverlayClick()}
           ></div>
         </Transition.Child>

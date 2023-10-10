@@ -5,7 +5,7 @@ export default function IconButton({
   ...props
 }: {
   name: string;
-} & React.ComponentProps<"svg">) {
+} & React.ComponentProps<"div">) {
   let iconDefinition: ReactElement;
 
   switch (name) {
@@ -41,7 +41,10 @@ export default function IconButton({
   }
 
   return (
-    <div className="hover:bg-primary-dark neutral cursor-pointer rounded-[14px] bg-primary p-1.5 text-neutral-50 transition-colors">
+    <div
+      {...props}
+      className={`neutral cursor-pointer rounded-[14px] bg-primary p-1.5 text-neutral-50 transition-colors hover:bg-primary-dark ${props.className}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -49,7 +52,6 @@ export default function IconButton({
         strokeWidth={1.85}
         stroke="currentColor"
         className="h-6 w-6"
-        {...props}
       >
         {iconDefinition}
       </svg>

@@ -2,12 +2,13 @@
 
 import Navbar from "@/components/layout/navbar";
 import IconCategory from "@/components/icon/icon-category";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import CustomModal from "@/components/modal/custom-modal";
 import AddTransactionForm from "@/components/transaction/add-transaction-form";
 import EmptyTransaction from "../../assets/illustration/empty-transaction.svg";
 import { getLocalData } from "@/helper/localStorage";
+import { Transition } from "@headlessui/react";
 
 export type Transaction = {
   id: string;
@@ -39,7 +40,7 @@ function TransactionItem({ transaction }: { transaction: Transaction }) {
         <div className="text-xs">{formatDate(transaction.date)}</div>
       </div>
 
-      <div className="transaction-item__amount text-dark1 ml-auto font-semibold">
+      <div className="transaction-item__amount ml-auto font-semibold text-dark1">
         {transaction.amount}
       </div>
     </div>
@@ -55,7 +56,7 @@ function TransactionCategory({
     <div className="mb-5">
       <div className="mt-2 px-4">
         <div className="mb-3 flex w-full items-center justify-between">
-          <div className="text-dark1 text-lg font-semibold">Recent</div>
+          <div className="text-lg font-semibold text-dark1">Recent</div>
           <div className="cursor-pointer text-sm text-primary transition-colors hover:text-primary-dark">
             See all
           </div>
@@ -79,7 +80,7 @@ export default function TransactionsPage() {
 
   const [transactionsData, setTransactionsData] = useState<
     Transaction[] | null
-  >(() => getLocalData("transactions"));
+  >(null);
 
   const refreshTransactionData = () => {
     setIsOpen(false);
@@ -88,14 +89,12 @@ export default function TransactionsPage() {
 
   useEffect(() => {
     const containerScrollElm = containerScrollRef.current;
-
     if (!containerScrollElm) return;
 
     const handleScroll = () => {
       setIsVisible(containerScrollElm.scrollTop < currScrollPos);
       setCurrScrollPos(containerScrollElm.scrollTop);
     };
-
     containerScrollElm.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -103,50 +102,64 @@ export default function TransactionsPage() {
     };
   }, [currScrollPos]);
 
+  useEffect(() => {
+    setTransactionsData(() => getLocalData("transactions"));
+  }, []);
+
   return (
-    <div className="h-full w-full overflow-y-auto" ref={containerScrollRef}>
-      <div className="h-[calc(100%-76px)]">
-        <Navbar />
-        {transactionsData ? (
-          <>
-            <TransactionCategory transactions={transactionsData} />
-          </>
-        ) : (
-          <div className="grid h-full w-full place-items-center">
-            <div className="pb-20 text-center">
-              <EmptyTransaction className="mx-auto mb-8 w-2/3" />
-              <p className="text-dark1 py-5 text-lg font-semibold">
-                Nothing to Show Yet
-              </p>
-              <p className="text-dark2 px-12 text-sm font-medium">
-                Enter your first transaction by tapping the add transaction
-                button below!
-              </p>
+    <Transition
+      as={Fragment}
+      appear
+      enter="ease-out duration-300"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      show={true}
+    >
+      <div className="h-full w-full overflow-y-auto" ref={containerScrollRef}>
+        <div className="h-[calc(100%-76px)]">
+          <Navbar title="Transaction" />
+          {transactionsData ? (
+            <>
+              <TransactionCategory transactions={transactionsData} />
+              <div className="h-10" />
+            </>
+          ) : (
+            <div className="grid h-full w-full place-items-center">
+              <div className="pb-20 text-center">
+                <EmptyTransaction className="mx-auto mb-8 w-2/3" />
+                <p className="py-5 text-lg font-semibold text-dark1">
+                  Nothing to Show Yet
+                </p>
+                <p className="px-12 text-sm font-medium text-dark2">
+                  Enter your first transaction by tapping the add transaction
+                  button below!
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* action add transaction */}
-      <div
-        className={clsx(
-          "absolute bottom-0 left-0 w-full bg-transparent p-4 transition-transform",
-          {
-            "translate-y-[80px]": !isVisible,
-          },
-        )}
-      >
-        <div
-          className="w-full cursor-pointer rounded-2xl bg-primary px-3 py-3 text-center text-white shadow-lg shadow-blue-500/40 transition-colors hover:bg-primary-dark"
-          onClick={() => setIsOpen(true)}
-        >
-          Add Transaction
+          )}
         </div>
-      </div>
 
-      <CustomModal isOpen={isOpen} onOverlayClick={() => setIsOpen(false)}>
-        <AddTransactionForm onAddTransaction={refreshTransactionData} />
-      </CustomModal>
-    </div>
+        {/* action add transaction */}
+        <div
+          className={clsx(
+            "absolute bottom-0 left-0 w-full bg-transparent p-4 transition-transform",
+            {
+              "translate-y-[80px]": !isVisible,
+            },
+          )}
+        >
+          <div
+            className="w-full cursor-pointer rounded-2xl bg-primary px-3 py-3 text-center text-white shadow-lg shadow-blue-500/40 transition-colors hover:bg-primary-dark"
+            onClick={() => setIsOpen(true)}
+          >
+            Add Transaction
+          </div>
+        </div>
+
+        <CustomModal isOpen={isOpen} onOverlayClick={() => setIsOpen(false)}>
+          <AddTransactionForm onAddTransaction={refreshTransactionData} />
+        </CustomModal>
+      </div>
+    </Transition>
   );
 }

@@ -1,3 +1,7 @@
+/**
+ * @type {import('@types/tailwindcss/tailwind-config').TailwindConfig}
+ */
+
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 
@@ -6,6 +10,8 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js", // <--- Add this line
+    "./node_modules/flowbite-react/**/*.js",
   ],
   theme: {
     extend: {
@@ -18,12 +24,12 @@ const config: Config = {
         primary: colors.blue[600],
         "primary-dark": colors.blue[800],
         "primary-light": colors.blue[300],
-        light: colors.neutral[50],
+        light: colors.blue[50],
         dark1: "#00274E",
         dark2: "#00294C",
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
 export default config;
