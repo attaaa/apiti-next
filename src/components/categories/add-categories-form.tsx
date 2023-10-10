@@ -125,11 +125,19 @@ export default function AddCategoryForm({
                 id="name"
                 placeholder="Groceries"
                 className="block w-full rounded-xl border-2 border-gray-300 px-4 py-2.5 text-gray-900 placeholder:text-gray-400  focus-visible:outline-none"
+                disabled={!(values.limitEnable.length > 0)}
               />
             </div>
 
             <div className="mb-4">
-              <div className="mb-2 text-sm font-semibold text-dark1">
+              <div
+                className={clsx(
+                  "mb-2 text-sm font-semibold",
+                  values.limitEnable.length > 0
+                    ? "text-dark1"
+                    : "text-slate-400",
+                )}
+              >
                 Limit Period
               </div>
               <TypeInput name="limitPeriod" options={typeOptions} />
